@@ -19,7 +19,7 @@ COPY . .
 RUN rm /etc/nginx/nginx.conf
 
 # Copy nginx configuration
-COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
 
 # Create start script with proper format
 RUN echo '#!/bin/sh\n\ncd /fastapi-book-project && uvicorn main:app --host 0.0.0.0 --port 8000 --workers 4 &\n\nsleep 5\n\nnginx -t && nginx -g "daemon off;"\n' > /start.sh && \
