@@ -15,8 +15,13 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          sudo systemctl restart nginx
+          sudo systemctl stop nginx || true
           sudo docker ps -q | xargs -r sudo docker stop
+          
           cd ~/fastapi-book-project
+          git reset --hard origin/main
+          git pull origin main
           ls -la
           ./deploy.sh
+          
+          sudo systemctl restart nginx
